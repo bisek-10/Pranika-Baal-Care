@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}About Us | Pranika Bal Sewa Physiotherapy{% endblock %}
+
+{% block content %}
+<section class="page-header reveal">
+    <h1>About Pranika Bal Sewa</h1>
+    <p>Pioneering professional, compassionate, and highly specialized pediatric physiotherapy in Nepal's Chitwan District.</p>
+</section>
+
+<section class="about-content">
+    <div class="about-grid">
+        <div class="about-text reveal">
+            <h2>Our Mission</h2>
+            <p>At Pranika Bal Sewa Physiotherapy Center, we believe that every child deserves the physical bedrock to explore the world unhindered. Located in Bharatpur-10, our state-of-the-art facility aims to bridge the gap in specialized pediatric physical interventions within our community.</p>
+            <p>Our approach discards cold clinical environments in favor of play-based therapy. We harness a child's natural curiosity to build strength, correct gait patterns, and conquer neurological delays while they simply think they are having fun.</p>
+            <div style="margin-top: 2rem;">
+                <a href="{{ url_for('contact') }}" class="btn-secondary">Visit Our Clinic</a>
+            </div>
+        </div>
+        <div class="about-image reveal">
+            <!-- Add a photo of the clinic interior, or staff working with a child -->
+            <img src="{{ url_for('static', filename='images/3.png') }}" alt="Pranika Bal Sewa Clinic Interior">
+        </div>
+    </div>
+</section>
+
+<section class="credentials-section reveal">
+    <h2>Why Choose Us?</h2>
+    <div class="credentials-grid">
+        <div class="credential-card reveal">
+            <i class="fas fa-user-md"></i>
+            <h3>Expert Clinicians</h3>
+            <p>Licensed physiotherapists bringing years of specialized, exclusive pediatric experience to Chitwan.</p>
+        </div>
+        <div class="credential-card reveal">
+            <i class="fas fa-heart"></i>
+            <h3>Child-First Environment</h3>
+            <p>Vibrant clinic designs combining toys, mats, and sensory tools minimizing clinical anxiety for kids.</p>
+        </div>
+        <div class="credential-card reveal">
+            <i class="fas fa-hands-helping"></i>
+            <h3>Holistic Family Support</h3>
+            <p>We partner heavily with parents, providing intensive home-care exercise plans for complete recovery.</p>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="{% block meta_description %}Pranika Bal Sewa Physiotherapy Center offers specialized pediatric physiotherapy in Bharatpur-10, Chitwan, Nepal. Expert care for your child's bright future.{% endblock %}" />
+
+    <!-- SEO Keywords -->
+    <meta
+      name="keywords"
+      content="Pediatric Physiotherapy Nepal, Child Physiotherapy Chitwan, Cerebral Palsy Therapy, Developmental Delay Therapy, Bharatpur-10 Clinic" />
+
+    <title>
+      {% block title %}Pranika Bal Sewa | Pediatric Physiotherapy Center{%
+      endblock %}
+    </title>
+
+    <!-- Google Fonts: Quicksand -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap"
+      rel="stylesheet" />
+
+    <!-- Main CSS -->
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/style.css') }}" />
+
+    <!-- FontAwesome for Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+      integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer" />
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar" aria-label="Main Navigation">
+      <a
+        href="{{ url_for('home') }}"
+        class="logo-container"
+        aria-label="Pranika Bal Sewa Home">
+        <!-- Ensure you save your logo as logo.png in the static/images folder -->
+        <img
+          src="{{ url_for('static', filename='images/logo1.png') }}"
+          alt="Pranika Bal Sewa"
+          class="brand-logo-text"
+          onerror="
+            this.src =
+              'https://via.placeholder.com/200x50?text=Pranika+Bal+Sewa'
+          " />
+      </a>
+
+      <ul class="nav-links">
+        <li><a href="{{ url_for('home') }}">Home</a></li>
+        <li><a href="{{ url_for('about') }}">About Us</a></li>
+        <li><a href="{{ url_for('services') }}">Services</a></li>
+        <li>
+          <a
+            href="{{ url_for('contact') }}"
+            class="btn-primary"
+            aria-label="Book an Appointment"
+            >Book Appointment</a
+          >
+        </li>
+      </ul>
+
+      <div
+        class="mobile-menu-toggle"
+        aria-label="Toggle Navigation"
+        role="button">
+        ☰
+      </div>
+    </nav>
+
+    <!-- Flash Messages (for contact form) -->
+    <div class="flash-messages">
+      {% with messages = get_flashed_messages(with_categories=true) %} {% if
+      messages %} {% for category, message in messages %}
+      <div class="flash-alert {{ category }}">{{ message }}</div>
+      {% endfor %} {% endif %} {% endwith %}
+    </div>
+
+    <!-- Main Content -->
+    <main>{% block content %}{% endblock %}</main>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-content">
+        <div class="footer-section">
+          <h3>Pranika Bal Sewa</h3>
+          <p>
+            Expert Pediatric Physiotherapy in Nepal.<br />Helping your child
+            achieve their brightest future.
+          </p>
+        </div>
+        <div class="footer-section" aria-label="Quick Links">
+          <h3>Quick Links</h3>
+          <ul style="list-style: none; padding: 0">
+            <li><a href="{{ url_for('about') }}">About Us</a></li>
+            <li><a href="{{ url_for('services') }}">Our Services</a></li>
+            <li><a href="{{ url_for('contact') }}">Contact & Location</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Contact Us</h3>
+          <p>
+            <i class="fas fa-map-marker-alt"></i> Bharatpur-10, Chitwan, Nepal
+          </p>
+          <p><i class="fas fa-phone-alt"></i> +977-981-2472210</p>
+          <p><i class="fas fa-envelope"></i> pranikabalsewa@gmail.com</p>
+
+          <div class="footer-socials">
+            <a
+              href="https://www.facebook.com/prakash.shrestha2222"
+              target="_blank"
+              title="Follow us on Facebook">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+            <a
+              href="https://www.tiktok.com/@pranikabaalphysio1"
+              target="_blank"
+              title="Follow us on TikTok">
+              <i class="fab fa-tiktok"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>
+          &copy; 2026 Pranika Bal Sewa Physiotherapy Center. All rights
+          reserved.
+        </p>
+      </div>
+    </footer>
+
+    <!-- Main JavaScript -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  </body>
+</html>

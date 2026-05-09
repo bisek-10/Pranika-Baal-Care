@@ -1,0 +1,132 @@
+{% extends "base.html" %} {% block title %}Home | Pranika Bal Sewa
+Physiotherapy{% endblock %} {% block content %}
+
+<!-- Hero Section -->
+<section class="hero reveal">
+  <div class="hero-content">
+    <h1>
+      Expert Physiotherapy for your
+      <span class="hero-highlight">Child’s Bright Future</span>
+    </h1>
+    <p>
+      Specialized pediatric care in Chitwan providing playful, nurturing, and
+      effective therapy to help your child thrive and achieve their
+      developmental milestones.
+    </p>
+    <div class="hero-buttons">
+      <a
+        href="{{ url_for('contact') }}"
+        class="btn-primary"
+        aria-label="Book an Appointment"
+        >Book Consultation</a
+      >
+      <a
+        href="{{ url_for('services') }}"
+        class="btn-secondary"
+        aria-label="Learn about our services"
+        >Our Services</a
+      >
+    </div>
+  </div>
+  <div class="hero-image-container reveal">
+    <!-- UPLOAD: A welcoming, play-based therapy photo of a child here. ID: hero-child-therapy -->
+    <img
+      id="hero-child-therapy"
+      src="{{ url_for('static', filename='images/1.png') }}"
+      alt="Child enjoying play-based physical therapy at Pranika Bal Sewa" />
+  </div>
+</section>
+
+<section class="services-overview reveal">
+  <h2 class="section-title">Specialized Care Tailored for Kids</h2>
+  <div class="services-grid">
+    <div class="service-card reveal">
+      <div class="card-accent"></div>
+      <h3>Developmental Delay</h3>
+      <p>
+        Early intervention strategies through therapeutic play to bridge
+        developmental gaps in rolling, crawling, and walking.
+      </p>
+    </div>
+
+    <div class="service-card reveal">
+      <div class="card-accent"></div>
+      <h3>Neuro-Physiotherapy</h3>
+      <p>
+        Dedicated care managing conditions like Cerebral Palsy utilizing
+        specialized movement frameworks to build independence.
+      </p>
+    </div>
+
+    <div class="service-card reveal">
+      <div class="card-accent" style="background: var(--primary-red);"></div>
+      <h3>Walking & Gait Correction</h3>
+      <p>
+        Professional assessment of "toe-walking," in-toeing, and walking discomfort 
+        to ensure a stable, confident, and pain-free stride.
+      </p>
+    </div>
+
+    <div class="service-card reveal">
+      <div class="card-accent" style="background: var(--primary-red);"></div>
+      <h3>Posture & Spine Care</h3>
+      <p>
+        Corrective therapy for scoliosis management and rounded shoulders 
+        caused by growth spurts or heavy school bags.
+      </p>
+    </div>
+
+    <div class="service-card reveal">
+      <div class="card-accent"></div>
+      <h3>Orthopedic Rehab</h3>
+      <p>
+        Expert evaluation and treatment for childhood musculoskeletal injuries, 
+        CTEV (Clubfoot), and post-surgical rehabilitation.
+      </p>
+    </div>
+
+    <div class="service-card reveal">
+      <div class="card-accent"></div>
+      <h3>Sensory Integration</h3>
+      <p>
+        Structured, sensory-rich activities to help children organize spatial
+        awareness, balance, and motor coordination.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Local Impact Section -->
+<section class="local-impact reveal">
+  <div class="local-impact-image reveal">
+    <!-- UPLOAD: A photo of the clinic interior from Chitwan, or exterior building. ID: clinic-chitwan-view -->
+    <img
+      id="clinic-chitwan-view"
+      src="{{ url_for('static', filename='images/2.jpg') }}"
+      alt="Pranika Bal Sewa Clinic in Bharatpur-10, Chitwan" />
+  </div>
+  <div class="local-impact-text reveal">
+    <h2>Serving the Heart of Chitwan</h2>
+    <br />
+    <p>
+      Located centrally in <strong>Bharatpur-10</strong>, we are proud to offer
+      world-class pediatric physiotherapy closer to home for families in Nepal.
+      We understand the unique cultural and community needs of Chitwan.
+    </p>
+    <br />
+    <p>
+      Our facility is designed to be completely child-friendly, eliminating the
+      intimidating "hospital" feel and replacing it with a vibrant, welcoming
+      space where kids love to learn, play, and heal.
+    </p>
+    <br />
+    <a
+      href="https://www.google.com/maps/place/Pranika+Baal+Sewa+Physiotherapy+Center/@27.6804505,84.4279362,17z/data=!4m14!1m7!3m6!1s0x3994fb005ebd192b:0xfa14997bca7024ce!2sPranika+Baal+Sewa+Physiotherapy+Center!8m2!3d27.6804505!4d84.4305111!16s%2Fg%2F11xdnn3m59!3m5!1s0x3994fb005ebd192b:0xfa14997bca7024ce!8m2!3d27.6804505!4d84.4305111!16s%2Fg%2F11xdnn3m59?entry=ttu&g_ep=EgoyMDI2MDQyMi4wIKXMDSoASAFQAw%3D%3D"
+      class="btn-primary"
+      style="background-color: var(--white); color: var(--primary-blue)"
+      >Get Directions</a
+    >
+  </div>
+</section>
+
+{% endblock %}
