@@ -20,7 +20,7 @@ app.config['GOOGLE_PLACE_ID'] = os.environ.get(
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
 app.config['MAIL_USE_SSL'] = True
-app.config['MAIL_USERNAME'] = 'connect.bisek@gmail.com'
+app.config['MAIL_USERNAME'] = 'prakash.shrestha986914@gmail.com'
 app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD') 
 
 mail = Mail(app)
@@ -125,7 +125,7 @@ def contact():
 
         msg = Message(subject=f"New Website Inquiry from {name}",
                       sender=app.config['MAIL_USERNAME'],
-                      recipients=['connect.bisek@gmail.com'])
+                      recipients=['prakash.shrestha986914@gmail.com'])
         msg.body = f"Name: {name}\nEmail: {email}\nPhone: {phone}\n\nMessage:\n{message}"
         
         try:
