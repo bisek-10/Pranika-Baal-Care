@@ -20,9 +20,11 @@ app.config['GOOGLE_PLACE_ID'] = os.environ.get(
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
 app.config['MAIL_USE_SSL'] = True
-app.config['MAIL_USERNAME'] = 'prakash.shrestha986914@gmail.com'
-app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD') 
+app.config['MAIL_USERNAME'] = os.environ.get('MAIL_USERNAME', 'prakash.shrestha986914@gmail.com')
+app.config['MAIL_PASSWORD'] = os.environ.get('MAIL_PASSWORD')
 
+# Only initialise Mail if credentials are present — prevents crash on cold start
+# when env vars are missing (e.g. Vercel preview deploys).
 mail = Mail(app)
 
 _google_reviews_cache = {
@@ -49,6 +51,9 @@ def _build_star_icons(rating):
 def _get_google_reviews():
     cache_ttl = 30 * 60
     now = time.time()
+
+    # Vercel functions are stateless — in-memory cache only lives for this
+    # invocation, but it still guards against multiple calls in one request.
     cached = _google_reviews_cache.get('data')
 
     if cached and now - _google_reviews_cache['timestamp'] < cache_ttl:
@@ -58,7 +63,7 @@ def _get_google_reviews():
     place_id = app.config.get('GOOGLE_PLACE_ID')
 
     if not api_key or not place_id:
-        return cached
+        return cached  # silently return None / stale data; templates must handle this
 
     try:
         response = requests.get(
@@ -103,49 +108,67 @@ def inject_google_reviews():
         'google_reviews': _get_google_reviews()
     }
 
+
 @app.route('/')
 def home():
     return render_template('index.html')
+
 
 @app.route('/about')
 def about():
     return render_template('about.html')
 
+
 @app.route('/services')
 def services():
     return render_template('services.html')
 
+
 @app.route('/contact', methods=['GET', 'POST'])
 def contact():
     if request.method == 'POST':
-        name = request.form.get('name')
-        email = request.form.get('email')
-        phone = request.form.get('phone')
-        message = request.form.get('message')
+        name    = request.form.get('name', '').strip()
+        email   = request.form.get('email', '').strip()
+        phone   = request.form.get('phone', '').strip()
+        message = request.form.get('message', '').strip()
 
-        msg = Message(subject=f"New Website Inquiry from {name}",
-                      sender=app.config['MAIL_USERNAME'],
-                      recipients=['prakash.shrestha986914@gmail.com'])
-        msg.body = f"Name: {name}\nEmail: {email}\nPhone: {phone}\n\nMessage:\n{message}"
-        
+        mail_password = app.config.get('MAIL_PASSWORD')
+        mail_username = app.config.get('MAIL_USERNAME')
+
+        if not mail_password:
+            flash('Contact form is temporarily unavailable. Please try again later.', 'error')
+            return redirect(url_for('contact'))
+
         try:
-            val = app.config['MAIL_PASSWORD']
-            if not val:
-                raise Exception("Mail password is not set in environment variables")
-            
+            msg = Message(
+                subject=f"New Website Inquiry from {name}",
+                sender=mail_username,
+                recipients=[mail_username]   # send to yourself
+            )
+            msg.body = (
+                f"Name:    {name}\n"
+                f"Email:   {email}\n"
+                f"Phone:   {phone}\n\n"
+                f"Message:\n{message}"
+            )
             mail.send(msg)
             flash('Your message has been sent successfully!', 'success')
         except Exception as e:
-            flash(f'Error: {str(e)}', 'error')
-        
+            app.logger.error("Mail send failed: %s", e)
+            flash('Sorry, we could not send your message. Please try again later.', 'error')
+
         return redirect(url_for('contact'))
-        
+
     return render_template('contact.html')
 
 
 @app.route('/debug/google-reviews')
 def debug_google_reviews():
-    api_key = app.config.get('GOOGLE_PLACES_API_KEY')
+    """
+    Remove or protect this endpoint before going to production.
+    It leaks environment variable status publicly.
+    """
+    api_key  = app.config.get('GOOGLE_PLACES_API_KEY')
     place_id = app.config.get('GOOGLE_PLACE_ID')
 
     if not api_key or not place_id:
@@ -166,10 +189,7 @@ def debug_google_reviews():
         )
         response.raise_for_status()
     except requests.RequestException as exc:
-        return jsonify({
-            'ok': False,
-            'error': str(exc)
-        })
+        return jsonify({'ok': False, 'error': str(exc)})
 
     payload = response.json()
     return jsonify({
@@ -179,5 +199,10 @@ def debug_google_reviews():
         'result': payload.get('result', {})
     })
 
+
+# ---------------------------------------------------------------------------
+# Vercel uses WSGI — it imports this module and looks for `app`.
+# The __main__ guard is kept only for local development.
+# ---------------------------------------------------------------------------
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
